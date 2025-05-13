@@ -30,6 +30,15 @@ class Lokasi {
         }
     }
 
+    async update(id, data) {
+        try {
+            const [result] = await this.db.query('UPDATE lokasi SET ? WHERE ID_Lokasi = ?', [data, id]);
+            return result;
+        } catch (err) {
+            throw new Error(`Gagal memperbarui lokasi dengan ID ${id}: ${err.message}`);
+        }
+    }
+
     async delete(id) {
         try {
             const [result] = await this.db.query('DELETE FROM lokasi WHERE ID_Lokasi = ?', [id]);
