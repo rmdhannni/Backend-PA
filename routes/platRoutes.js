@@ -5,6 +5,7 @@ console.log('📦 platRoutes loaded!');
 console.log('platController:', platController);
 
 
+router.get('/lot/:lot', platController.getPlatByLotBatch);
 router.get('/', platController.getAllPlat);
 router.get('/:id', platController.getPlatById);
 router.post('/', platController.createPlat);

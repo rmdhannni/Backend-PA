@@ -56,10 +56,61 @@ const deletePlat = async (req, res) => {
     }
 };
 
+const getPlatByLotBatch = async (req, res) => {
+    try {
+        const lot = req.params.lot;
+        const [result] = await db.query(
+            `SELECT 
+                p.ID_Plat,
+                p.Nama_plat,
+                p.Lot_Batch_Number,
+                p.Kuantitas,
+                l.Nama_Lokasi,
+                l.latitude,
+                l.longitude
+             FROM plat p
+             JOIN lokasi l ON p.ID_Lokasi = l.ID_Lokasi
+             WHERE p.Lot_Batch_Number = ?`,
+            [lot]
+        );
+
+        if (!result.length) {
+            return res.status(404).json({ 
+                success: false,
+                message: 'Material tidak ditemukan' 
+            });
+        }
+
+        const platData = result[0];
+        
+        // Pastikan tipe data numerik
+        const responseData = {
+            ...platData,
+            latitude: parseFloat(platData.latitude),
+            longitude: parseFloat(platData.longitude),
+            Kuantitas: parseInt(platData.Kuantitas)
+        };
+
+        res.status(200).json({
+            success: true,
+            data: responseData
+        });
+
+    } catch (err) {
+        console.error('Error:', err);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: err.message
+        });
+    }
+};``
+
 module.exports = {
     getAllPlat,
     getPlatById,
     createPlat,
     updatePlat,
-    deletePlat
+    deletePlat,
+    getPlatByLotBatch
 };
