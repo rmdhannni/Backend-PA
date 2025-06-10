@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'warehouse_ptpal'
+    database: 'warehousePtpal'
 });
 
 // Hapus .connect() karena .promise() sudah mengelola koneksi otomatis

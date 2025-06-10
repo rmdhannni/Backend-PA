@@ -6,7 +6,8 @@ const {
   buatDistribusi, 
   updateDistribusiStatus, 
   validasiDistribusi,
-  getDistribusiById
+  getDistribusiById,
+  validateDistribusiByQrCode
 } = require('../controllers/distribusiController');
 
 // Get all distributions
@@ -26,5 +27,7 @@ router.put('/status/:id', updateDistribusiStatus);
 
 // Validate distribution (admin approving or rejecting)
 router.put('/validate/:id', validasiDistribusi);
+
+router.put('/scan-validation', validateDistribusiByQrCode);
 
 module.exports = router;
